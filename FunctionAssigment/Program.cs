@@ -1,48 +1,50 @@
-﻿namespace FunctionAssigment
+﻿using System;
+
+namespace FunctionAssigment
 {
     internal class Program
     {
         /// <summary>
-        /// Kysyy käyttäjältä nimeä
+        /// Kysyy käyttäjän nimeä
         /// </summary>
-        /// <returns>palauttaa ei tyjän nimen</returns>
+        /// <returns>palauttaa nimen,joka ei ole tyhjä</returns>
         static string KysyNimi()
         {
             string name = "";
-            bool valid = false;
-            // Ask for name and ensure it is not empty
-            while (!valid)
+            while (true)
             {
                 Console.Write("Enter your name: ");
                 name = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(name))
-                    valid = true;
+                    break;
                 else
                     Console.WriteLine("Name cannot be empty.");
             }
             return name;
         }
+
         /// <summary>
-        /// Kysyy käyttäjän ikää
+        /// Kysytään käyttäjän ikää
         /// </summary>
-        /// <returns> palauttaa iän positiivisena kokonaislukuna </returns>
+        /// <returns>
+        /// Plauttaa käyttäjän iän positiivisena kokonaislukuna
+        /// </returns>
         static int KysyIka()
         {
             int age = 0;
-            bool valid = false;
-            while (!valid)
+            while (true)
             {
                 Console.Write("Enter your age: ");
                 string input = Console.ReadLine();
                 if (int.TryParse(input, out age) && age > 0)
-                    valid = true;
+                    break;
                 else
                     Console.WriteLine("Please enter a positive integer.");
             }
             return age;
         }
 
-        
+
         /// </summary> Tulostaa annetun nimen sekä iän </summary>
         static void TulostaNimiJaIka(string name, int age)
         {
@@ -52,9 +54,12 @@
         /// <summary>
         /// Tarkistaa onko käyttäjä täysi-ikäinen
         /// </summary>
-        /// <returns> Palauttaa True, jos on täysi-ikäinen, muuten false </returns>
+        /// <returns> 
+        /// Palauttaa True, jos on täysi-ikäinen, muuten false 
+        /// </returns>
         static bool TarkistaTaysiIkainen(int age)
         {
+            // Palautetaan vertailun tulos suoraan
             return age >= 18;
         }
         /// <summary>
@@ -65,22 +70,22 @@
         static void VertaaNimea(string name, string compareTo)
         {
             string compareName = "Matti";
-            // Comparison ignoring case
+            // Case-insensitive (suositeltu + StringComparison)
             if (name.Equals(compareName, StringComparison.OrdinalIgnoreCase))
                 Console.WriteLine("Your name matches 'Matti' (case-insensitive).");
-
-            // Exact match comparison (case-sensitive)
+            // Case-sensitive tarkka vertailu
             if (name.Equals(compareName))
                 Console.WriteLine("Your name is exactly 'Matti' (case-sensitive).");
         }
         static void Main(string[] args)
         {
+            // Selkeämpi koodi
             string name = KysyNimi();
             int age = KysyIka();
 
             TulostaNimiJaIka(name, age);
             bool isfullAge = TarkistaTaysiIkainen(age);
-            
+
             if (isfullAge)
             {
                 Console.WriteLine("You are an adult.");
@@ -89,9 +94,8 @@
             {
                 Console.WriteLine("You are not an adult.");
             }
-                
             
-            // Compare the name to another string (e.g., "Matti")
+            // Verrataan nimeä merkkijonoon "Matti"
             VertaaNimea(name, "Matti");
         }
     }
